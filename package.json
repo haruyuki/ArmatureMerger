@@ -1,0 +1,10 @@
+{
+  "name": "moe.haruyuki.armaturemerger",
+  "version": "0.1.0",
+  "description": "Unity Editor tool for merging clothing bone hierarchies onto VRM avatars",
+  "displayName": "ArmatureMerger",
+  "unity": "2022.3",
+  "author": {
+    "name": "blumewmew"
+  },
+}
