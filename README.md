@@ -14,8 +14,16 @@
 - サフィックスの手動入力も可能
 - マージ時にボーン名にサフィックスを追加するかどうかを選択可能
 - プレハブインスタンスの自動展開（必要に応じて）
-- リパレント時にワールド位置を保持するオプション
 - アンドゥ完全対応
+
+### インストール方法
+
+1. Unityの Package Manager ウィンドウを開きます（Window > Package Manager）。
+2. 左上の `+` ボタンをクリックし、**"Add package from git URL..."** を選択します。
+3. 以下のURLを入力して **Add** をクリックします：  
+   `https://github.com/haruyuki/ArmatureMerger.git`
+
+インストール後、Unity上部メニューの **Tools > Armature Merger** からツールを起動できます。
 
 ---
 
@@ -31,8 +39,17 @@ It is intended for cases where the clothing is already designed to fit the avata
 - Manual suffix entry when auto‑detection fails
 - Option to append the suffix to bone names during merge
 - Automatically unpacks prefab instances if needed
-- Option to preserve world position when reparenting
 - Full Undo support
+
+## Installation / インストール方法
+
+### Unity Package Manager (UPM)
+1. Open the Unity Package Manager window (Window > Package Manager).
+2. Click the `+` button in the top‑left corner and select **"Add package from git URL..."**.
+3. Enter the following URL and click **Add**:  
+   `https://github.com/haruyuki/ArmatureMerger.git`
+
+After installation, you will find **Tools > Armature Merger** in the Unity top menu.
 
 ---
 
