@@ -1,5 +1,7 @@
 # Armature Merger
 
+<img src="screenshot.png" height="500" alt="Screenshot of Armature Merger tool window">
+
 ## 日本語
 
 このUnityエディタ拡張は、衣装のボーン階層をアバターのアーマチュアに簡単に統合するためのツールです。  
