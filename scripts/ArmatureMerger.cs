@@ -316,8 +316,8 @@ namespace blumewmew.Tools
                 }
             }
 
-            // Reparent – always preserve world position
-            Undo.SetTransformParent(clothingBone, avatarParent, true, "Reparent Bone");
+            Undo.RecordObject(clothingBone, "Reparent Bone");
+            clothingBone.SetParent(avatarParent, true);
 
             {
                 Transform avatarMatch = FindMatchingAvatarBone(child, avatarParent);
