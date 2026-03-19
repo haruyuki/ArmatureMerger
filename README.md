@@ -4,8 +4,9 @@
 
 ## 日本語
 
-このUnityエディタ拡張は、衣装のボーン階層をアバターのアーマチュアに簡単に統合するためのツールです。  
-衣装があらかじめアバターに合わせて作られている場合に、ワンクリックでボーンのリネームとリパレントを行います。  
+このUnityエディタツールは、衣装のボーン階層をアバターのアーマチュアに簡単に統合するためのツールです。  
+特に、ModularAvatarなどの最新ツールが動作しない古いUnityバージョン（VSFアバターで使用されるUnity 2019など）で有用です。  
+衣装があらかじめアバターに合わせて作られていれば、あらゆる人型アバターで使用できます。  
 **VRM 0.X**（UniVRM）での使用を想定しています（VRM 1.Xは未テスト）。
 
 ### 機能
@@ -29,8 +30,9 @@
 
 ## English
 
-This Unity Editor extension helps you merge a clothing armature into an avatar's armature hierarchy with a single click.  
-It is intended for cases where the clothing is already designed to fit the avatar and you just need to reparent the bones and optionally rename them.  
+This Unity Editor tool helps you merge a clothing armature into an avatar's armature hierarchy with a single click.  
+It is particularly useful for older Unity versions (such as Unity 2019 used by VSF avatars) where more feature‑rich tools like ModularAvatar may not be compatible.  
+The tool works with any humanoid avatar, provided the clothing armature is already fitted to the avatar.  
 **Tested with VRM 0.X** (UniVRM). VRM 1.X has not been tested.
 
 ### Features
@@ -54,12 +56,15 @@ After installation, you will find **Tools > Armature Merger** in the Unity top m
 ---
 
 ## Note on Alternatives / 代替ツールについて
-より高度で非破壊的なアバター改変には、**NDMF**（Non-Destructive Modular Framework）や**Modular Avatar**などのツールがあります。  
-本スクリプトは、衣装がすでにアバターにフィットする状態で、手軽にボーンを統合したい場合に適したシンプルなソリューションです。  
-For more advanced, non‑destructive avatar workflows, consider using **NDMF** (Non-Destructive Modular Framework) or **Modular Avatar**.  
-This script is a simple, single‑file solution for straightforward bone merging when the clothing is already avatar‑ready.
 
+**ModularAvatar**や**NDMF**などの最新ツールは高度で非破壊的なアバター改変を可能にしますが、**Unity 2019（VSFアバターで使用）との互換性に制限があります**。  
+本ツールはレガシー環境でも使える軽量な代替手段です。ただし、ModularAvatarのような非破壊的手法と異なり、**直接ボーン階層を変更する破壊的な方法**を取っています。
+
+Modern tools like **ModularAvatar** and **NDMF** offer advanced, non‑destructive avatar workflows, but **they may have compatibility limitations with older Unity versions** such as Unity 2019 used by VSF avatars.  
+This tool provides a lightweight alternative that works in legacy environments. However, unlike ModularAvatar's non‑destructive approach, it **directly modifies the bone hierarchy (destructive method)**.
+
+---
 
 ## Acknowledgements / 謝辞
-This tool is inspired by the *Kisekae Bone Setup* created by **ureishi** in 2019.  
-本ツールは、**ureishi**氏によって2019年に公開された*Kisekae Bone Setup*に触発されています。
+This tool is inspired by the *Kisekae Bone Setup* created by **ureishi**.  
+本ツールは、**ureishi**氏によって公開された*Kisekae Bone Setup*に触発されています。
