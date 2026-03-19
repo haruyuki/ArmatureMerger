@@ -21,17 +21,17 @@ namespace blumewmew.Tools
         private bool unpackPrefabIfNeeded = true;
 
         private string statusMessage = "";
-        private bool configurationValid = false;
+        private bool configurationValid;
 
-        private bool showAdvancedOptions = false;
+        private bool showAdvancedOptions;
 
-        private Regex suffixRegex = null;
-        private string cachedSuffixForRegex = null;
+        private Regex suffixRegex;
+        private string cachedSuffixForRegex;
 
         [MenuItem("Tools/Armature Merger")]
         private static void OpenWindow()
         {
-            var window = GetWindow<ArmatureMerger>();
+            ArmatureMerger window = GetWindow<ArmatureMerger>();
             window.minSize = new Vector2(500, 450);
             window.Show();
         }
@@ -45,7 +45,7 @@ namespace blumewmew.Tools
         {
             EditorGUILayout.LabelField("Armature Merger", EditorStyles.boldLabel);
 
-            using (var scope = new EditorGUI.ChangeCheckScope())
+            using (EditorGUI.ChangeCheckScope scope = new EditorGUI.ChangeCheckScope())
             {
                 DrawMainFields();
                 DrawAdvancedOptions();
@@ -236,7 +236,7 @@ namespace blumewmew.Tools
             Transform best = null;
             int maxChildren = 0;
 
-            foreach (var t in obj.GetComponentsInChildren<Transform>(true))
+            foreach (Transform t in obj.GetComponentsInChildren<Transform>(true))
             {
                 foreach (var name in commonNames)
                 {
@@ -260,7 +260,7 @@ namespace blumewmew.Tools
         {
             if (unpackPrefabIfNeeded && PrefabUtility.IsPartOfPrefabInstance(clothingRoot))
             {
-                var root = PrefabUtility.GetOutermostPrefabInstanceRoot(clothingRoot);
+                GameObject root = PrefabUtility.GetOutermostPrefabInstanceRoot(clothingRoot);
                 if (!EditorUtility.DisplayDialog("Unpack Prefab?",
                         "The clothing object is part of a prefab instance. Modifying its hierarchy requires unpacking.\n\nUnpack now?",
                         "Unpack", "Cancel"))
@@ -301,7 +301,7 @@ namespace blumewmew.Tools
         {
 
             // Snapshot children BEFORE reparenting so the list isn't affected by hierarchy changes
-            var children = new List<Transform>(clothingBone.childCount);
+            List<Transform> children = new List<Transform>(clothingBone.childCount);
             for (int i = 0; i < clothingBone.childCount; i++)
                 children.Add(clothingBone.GetChild(i));
 
@@ -319,7 +319,6 @@ namespace blumewmew.Tools
             // Reparent – always preserve world position
             Undo.SetTransformParent(clothingBone, avatarParent, true, "Reparent Bone");
 
-            foreach (var child in children)
             {
                 Transform avatarMatch = FindMatchingAvatarBone(child, avatarParent);
                 if (avatarMatch != null)
