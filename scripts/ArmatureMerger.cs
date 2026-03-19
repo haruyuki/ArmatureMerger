@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace blumewmew.Tools
@@ -116,12 +117,10 @@ namespace blumewmew.Tools
         {
             EditorGUILayout.Space();
             showAdvancedOptions = EditorGUILayout.Foldout(showAdvancedOptions, "Advanced Options", true);
-            if (showAdvancedOptions)
-            {
-                EditorGUI.indentLevel++;
-                unpackPrefabIfNeeded = EditorGUILayout.ToggleLeft("Automatically unpack clothing prefab if needed", unpackPrefabIfNeeded);
-                EditorGUI.indentLevel--;
-            }
+            if (!showAdvancedOptions) return;
+            EditorGUI.indentLevel++;
+            unpackPrefabIfNeeded = EditorGUILayout.ToggleLeft("Automatically unpack clothing prefab if needed", unpackPrefabIfNeeded);
+            EditorGUI.indentLevel--;
         }
 
         private void ResetFields()
@@ -238,17 +237,14 @@ namespace blumewmew.Tools
 
             foreach (Transform t in obj.GetComponentsInChildren<Transform>(true))
             {
-                foreach (var name in commonNames)
+                if (commonNames.Any(boneName => string.Equals(t.name, boneName, System.StringComparison.OrdinalIgnoreCase)))
                 {
-                    if (string.Equals(t.name, name, System.StringComparison.OrdinalIgnoreCase))
-                        return t;
+                    return t;
                 }
 
-                if (t.childCount > maxChildren)
-                {
-                    maxChildren = t.childCount;
-                    best = t;
-                }
+                if (t.childCount <= maxChildren) continue;
+                maxChildren = t.childCount;
+                best = t;
             }
             return best;
         }
@@ -290,11 +286,10 @@ namespace blumewmew.Tools
                 cachedSuffixForRegex = null;
                 return;
             }
-            if (cachedSuffixForRegex != clothingSuffix)
-            {
-                suffixRegex = new Regex(@"[_-]?" + Regex.Escape(clothingSuffix) + "$", RegexOptions.Compiled);
-                cachedSuffixForRegex = clothingSuffix;
-            }
+
+            if (cachedSuffixForRegex == clothingSuffix) return;
+            suffixRegex = new Regex(@"[_-]?" + Regex.Escape(clothingSuffix) + "$", RegexOptions.Compiled);
+            cachedSuffixForRegex = clothingSuffix;
         }
 
         private void MergeBone(Transform clothingBone, Transform avatarParent)
@@ -319,6 +314,7 @@ namespace blumewmew.Tools
             Undo.RecordObject(clothingBone, "Reparent Bone");
             clothingBone.SetParent(avatarParent, true);
 
+            foreach (Transform child in children)
             {
                 Transform avatarMatch = FindMatchingAvatarBone(child, avatarParent);
                 if (avatarMatch != null)
@@ -339,18 +335,14 @@ namespace blumewmew.Tools
                 baseName = clothingBone.name;
 
             Transform match = avatarParent.Find(baseName);
-            if (match != null)
-                return match;
-
-            // Fallback to exact name
-            return avatarParent.Find(clothingBone.name);
+            return match != null ? match :
+                // Fallback to exact name
+                avatarParent.Find(clothingBone.name);
         }
 
-        private string StripSuffix(string name)
+        private string StripSuffix(string clothingName)
         {
-            if (suffixRegex == null)
-                return name;
-            return suffixRegex.Replace(name, "");
+            return suffixRegex == null ? clothingName : suffixRegex.Replace(clothingName, "");
         }
     }
 }
